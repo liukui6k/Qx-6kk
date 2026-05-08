@@ -1,0 +1,43 @@
+#!name=我的私人定制 (纯净无B站版)
+#!desc=针对 50 款 App 深度优化，剔除 B 站脚本以彻底解决子资源报错问题。
+#!author=Gemini
+
+[rewrite_local]
+# > 1. 社交通讯 (微信/贴吧/QQ邮箱)
+^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad url reject-dict
+^https?:\/\/servicedash\.service\.qq\.com\/cgi-bin\/get_app_config url reject-dict
+^https?:\/\/tieba\.baidu\.com\/c\/s\/download url reject
+^https?:\/\/tieba\.baidu\.com\/c\/s\/ad\/ url reject-dict
+^https?:\/\/mail\.qq\.com\/cgi-bin\/report_ad url reject
+
+# > 2. 购物支付 (淘宝/京东/美团/拼多多/得物/云闪付/闲鱼)
+^https?:\/\/mdap\.alipaylog\.com\/v\d\/log\/batch url reject
+^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.wireless\.home\.splash url reject-dict
+^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=startUpAd url reject-dict
+^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.idle\.home\.welcome url reject-dict
+^https?:\/\/app\.shizhuang\.com\/api\/v\d\/ad\/setup url reject-dict
+^https?:\/\/api\.pinduoduo\.com\/api\/alexa\/speed\/sampling url reject
+^https?:\/\/ads\.95516\.com\/ url reject
+^https?:\/\/mapi\.dianping\.com\/mapi\/operating\/loadsplash url reject-dict
+
+# > 3. 视听娱乐 (抖音/小红书/网易云 - 已彻底移除B站)
+^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/homefeed\/ads url reject-dict
+^https?:\/\/.*\.snssdk\.com\/api\/ad\/ url reject
+^https?:\/\/music\.163\.com\/api\/v\d\/ad\/get url reject-dict
+
+# > 4. 生活工具 (12306/12123/航旅/高德/知乎/酷安/网盘/平安好车主)
+^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList url reject-dict
+^https?:\/\/gab\.122\.gov\.cn\/eapp\/m\/sysquery\/adver url reject
+^https?:\/\/amap\.com\/v\d\/ad\/main_page url reject-dict
+^https?:\/\/umetrip\.com\/gateway\/api\/ad\/ url reject-dict
+^https?:\/\/api\.zhihu\.com\/ad-realtime-runtime url reject-dict
+^https?:\/\/api\.coolapk\.com\/v6\/main\/init url reject-dict
+^https?:\/\/pan\.baidu\.com\/act\/api\/activityasync url reject-dict
+^https?:\/\/pa-resource\.pingan\.com\.cn\/ad\/ url reject
+
+# > 5. 相机办公 (醒图/美图/剪映/钉钉)
+^https?:\/\/ads\.pstatp\.com\/ url reject
+^https?:\/\/adash\.manhuazhan\.com\/ url reject
+
+[mitm]
+hostname = mp.weixin.qq.com, servicedash.service.qq.com, tieba.baidu.com, mail.qq.com, mdap.alipaylog.com, *.taobao.com, api.m.jd.com, app.shizhuang.com, api.pinduoduo.com, ads.95516.com, mapi.dianping.com, edith.xiaohongshu.com, *.snssdk.com, music.163.com, ad.12306.cn, gab.122.gov.cn, *.amap.com, *.umetrip.com, api.zhihu.com, api.coolapk.com, pan.baidu.com, pa-resource.pingan.com.cn, ads.pstatp.com
