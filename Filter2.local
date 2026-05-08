@@ -1,0 +1,81 @@
+[filter_local]
+# ========== 1. 广告/追踪拦截 (针对你手机App精准屏蔽) ==========
+DOMAIN,ad.12306.cn,REJECT
+DOMAIN,wxsnsdy.video.qq.com,REJECT
+DOMAIN,ads.pstatp.com,REJECT
+DOMAIN,adash.manhuazhan.com,REJECT
+
+# ========== 2. 苹果生态顶级优化 (反击豆包：保留关键匹配，保推送) ==========
+DOMAIN-SUFFIX,apple.com,DIRECT
+DOMAIN-SUFFIX,icloud.com,DIRECT
+DOMAIN-SUFFIX,itunes.apple.com,DIRECT
+DOMAIN-SUFFIX,mzstatic.com,DIRECT
+# 保留关键字匹配，确保系统级服务(证书/推送)不绕路，这才是省电的关键
+DOMAIN-KEYWORD,apple,DIRECT
+
+# ========== 3. 国内 App 必备直连 (针对截图50款应用，全方位直连) ==========
+# 社交/支付/金融/网盘 (网易全系直连，无需精简)
+DOMAIN-SUFFIX,qq.com,DIRECT
+DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,alipay.com,DIRECT
+DOMAIN-SUFFIX,163.com,DIRECT
+DOMAIN-SUFFIX,95516.com,DIRECT
+DOMAIN-SUFFIX,ccb.com,DIRECT
+DOMAIN-SUFFIX,pingan.com.cn,DIRECT
+DOMAIN-SUFFIX,pan.baidu.com,DIRECT
+
+# 购物/生活/物流 (增加闲鱼、得物、拼多多)
+DOMAIN-SUFFIX,taobao.com,DIRECT
+DOMAIN-SUFFIX,tmall.com,DIRECT
+DOMAIN-SUFFIX,jd.com,DIRECT
+DOMAIN-SUFFIX,pinduoduo.com,DIRECT
+DOMAIN-SUFFIX,shizhuang.com,DIRECT
+DOMAIN-SUFFIX,dewu.com,DIRECT
+DOMAIN-SUFFIX,idlefish.com,DIRECT
+
+# 娱乐/地图/工具 (补全大疆、知乎、B站、高德)
+DOMAIN-SUFFIX,bilibili.com,DIRECT
+DOMAIN-SUFFIX,xiaohongshu.com,DIRECT
+DOMAIN-SUFFIX,zhihu.com,DIRECT
+DOMAIN-SUFFIX,amap.com,DIRECT
+DOMAIN-SUFFIX,12306.cn,DIRECT
+DOMAIN-SUFFIX,umetrip.com,DIRECT
+DOMAIN-SUFFIX,motofans.com.cn,DIRECT
+DOMAIN-SUFFIX,dji.com,DIRECT
+DOMAIN-SUFFIX,coolapk.com,DIRECT
+
+# ========== 4. 国外代理 (拒绝豆包的语法错误，修正格式) ==========
+# YouTube & Google 全家桶
+DOMAIN-SUFFIX,googlevideo.com,Proxy
+DOMAIN-SUFFIX,youtube.com,Proxy
+DOMAIN-SUFFIX,youtu.be,Proxy
+DOMAIN-SUFFIX,google.com,Proxy
+DOMAIN-SUFFIX,googleapis.com,Proxy
+
+# Telegram (高阶 IP 段，秒连核心)
+DOMAIN-SUFFIX,telegram.org,Proxy
+DOMAIN-SUFFIX,t.me,Proxy
+IP-CIDR,91.108.4.0/22,Proxy
+IP-CIDR,91.108.56.0/22,Proxy
+IP-CIDR,149.154.160.0/20,Proxy
+
+# Instagram & Meta
+DOMAIN-SUFFIX,instagram.com,Proxy
+DOMAIN-SUFFIX,cdninstagram.com,Proxy
+DOMAIN-SUFFIX,facebook.com,Proxy
+
+# 修正后的 Spotify & Netflix (删掉豆包的垃圾语法)
+DOMAIN-SUFFIX,pscdn.co,Proxy
+DOMAIN-SUFFIX,scdn.co,Proxy
+DOMAIN-SUFFIX,spotify.com,Proxy
+DOMAIN-SUFFIX,netflix.com,Proxy
+
+# 基础国外工具
+DOMAIN-SUFFIX,github.com,Proxy
+DOMAIN-SUFFIX,telegram.me,Proxy
+
+# ========== 5. 终极省电兜底 ==========
+# 中国 IP 全部直连，哪怕你有 1000 个国产 App 没写，也能自动直连
+GEOIP,CN,DIRECT
+# 其他全部代理
+FINAL,Proxy
