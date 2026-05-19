@@ -1,43 +1,137 @@
-#!name=我的私人定制 (纯净无B站版)
-#!desc=针对 50 款 App 深度优化，剔除 B 站脚本以彻底解决子资源报错问题。
-#!author=Gemini
+#!name=我的私人定制 Pro (稳定纯净版)
+#!desc=轻 MITM + 精准 reject-dict + 低副作用策略，适合长期稳定使用
+#!author=ChatGPT
 
 [rewrite_local]
-# > 1. 社交通讯 (微信/贴吧/QQ邮箱)
+
+# =========================
+# 1. 微信 / QQ / 百度系
+# =========================
+
+# 微信公众号广告
 ^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad url reject-dict
+
+# QQ服务配置广告
 ^https?:\/\/servicedash\.service\.qq\.com\/cgi-bin\/get_app_config url reject-dict
-^https?:\/\/tieba\.baidu\.com\/c\/s\/download url reject
-^https?:\/\/tieba\.baidu\.com\/c\/s\/ad\/ url reject-dict
-^https?:\/\/mail\.qq\.com\/cgi-bin\/report_ad url reject
 
-# > 2. 购物支付 (淘宝/京东/美团/拼多多/得物/云闪付/闲鱼)
-^https?:\/\/mdap\.alipaylog\.com\/v\d\/log\/batch url reject
-^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.wireless\.home\.splash url reject-dict
-^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=startUpAd url reject-dict
-^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.idle\.home\.welcome url reject-dict
-^https?:\/\/app\.shizhuang\.com\/api\/v\d\/ad\/setup url reject-dict
-^https?:\/\/api\.pinduoduo\.com\/api\/alexa\/speed\/sampling url reject
-^https?:\/\/ads\.95516\.com\/ url reject
-^https?:\/\/mapi\.dianping\.com\/mapi\/operating\/loadsplash url reject-dict
+# QQ邮箱广告上报
+^https?:\/\/mail\.qq\.com\/cgi-bin\/report_ad url reject-dict
 
-# > 3. 视听娱乐 (抖音/小红书/网易云 - 已彻底移除B站)
-^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/homefeed\/ads url reject-dict
-^https?:\/\/.*\.snssdk\.com\/api\/ad\/ url reject
-^https?:\/\/music\.163\.com\/api\/v\d\/ad\/get url reject-dict
+# 百度贴吧广告
+^https?:\/\/tieba\.baidu\.com\/c\/s\/ad\/.* url reject-dict
 
-# > 4. 生活工具 (12306/12123/航旅/高德/知乎/酷安/网盘/平安好车主)
-^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList url reject-dict
-^https?:\/\/gab\.122\.gov\.cn\/eapp\/m\/sysquery\/adver url reject
-^https?:\/\/amap\.com\/v\d\/ad\/main_page url reject-dict
-^https?:\/\/umetrip\.com\/gateway\/api\/ad\/ url reject-dict
-^https?:\/\/api\.zhihu\.com\/ad-realtime-runtime url reject-dict
-^https?:\/\/api\.coolapk\.com\/v6\/main\/init url reject-dict
-^https?:\/\/pan\.baidu\.com\/act\/api\/activityasync url reject-dict
-^https?:\/\/pa-resource\.pingan\.com\.cn\/ad\/ url reject
+# 百度贴吧下载推广（精准化）
+^https?:\/\/tieba\.baidu\.com\/c\/s\/download\/app.* url reject-dict
 
-# > 5. 相机办公 (醒图/美图/剪映/钉钉)
-^https?:\/\/ads\.pstatp\.com\/ url reject
-^https?:\/\/adash\.manhuazhan\.com\/ url reject
+
+# =========================
+# 2. 淘宝 / 闲鱼 / 支付宝
+# =========================
+
+# 支付宝日志采集
+^https?:\/\/mdap\.alipaylog\.com\/v\d\/log\/batch url reject-dict
+
+# 淘宝启动广告（新版）
+^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.(wireless\.home\.splash|baichuan\.splash|homepage\.popup).* url reject-dict
+
+# 闲鱼欢迎页广告
+^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.idle\.home\.welcome.* url reject-dict
+
+# 阿里系统计
+^https?:\/\/gm\.mmstat\.com\/.* url reject
+^https?:\/\/log\.aliyuncs\.com\/.* url reject
+
+
+# =========================
+# 3. 京东 / 拼多多 / 美团 / 得物 / 云闪付
+# =========================
+
+# 京东开屏广告
+^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=startUpAd.* url reject-dict
+
+# 拼多多测速采样
+^https?:\/\/api\.pinduoduo\.com\/api\/alexa\/speed\/sampling.* url reject-dict
+
+# 美团 / 大众点评开屏
+^https?:\/\/mapi\.dianping\.com\/mapi\/operating\/loadsplash.* url reject-dict
+
+# 得物开屏广告
+^https?:\/\/app\.shizhuang\.com\/api\/v\d\/ad\/setup.* url reject-dict
+
+# 云闪付广告
+^https?:\/\/ads\.95516\.com\/.* url reject-dict
+
+
+# =========================
+# 4. 抖音 / 小红书 / 网易云
+# =========================
+
+# 小红书首页广告
+^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/homefeed\/ads.* url reject-dict
+
+# 抖音精准广告接口（避免误杀）
+^https?:\/\/.*\.snssdk\.com\/api\/ad\/get_ads.* url reject-dict
+
+# 字节监控配置
+^https?:\/\/mon\.snssdk\.com\/monitor\/appmonitor\/v\d\/settings.* url reject-dict
+
+# 字节广告资源
+^https?:\/\/ads\.pstatp\.com\/.* url reject-dict
+
+# 网易云广告
+^https?:\/\/music\.163\.com\/api\/v\d\/ad\/get.* url reject-dict
+
+
+# =========================
+# 5. 高德 / 航旅 / 12306 / 12123
+# =========================
+
+# 12306广告
+^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList.* url reject-dict
+
+# 交管12123广告
+^https?:\/\/gab\.122\.gov\.cn\/eapp\/m\/sysquery\/adver.* url reject-dict
+
+# 高德地图广告
+^https?:\/\/restapi\.amap\.com\/v\d\/ad\/main_page.* url reject-dict
+
+# 航旅纵横广告
+^https?:\/\/gateway\.umetrip\.com\/api\/ad\/.* url reject-dict
+
+
+# =========================
+# 6. 知乎 / 酷安 / 百度网盘
+# =========================
+
+# 知乎实时广告
+^https?:\/\/api\.zhihu\.com\/ad-realtime-runtime.* url reject-dict
+
+# 酷安初始化广告
+^https?:\/\/api\.coolapk\.com\/v6\/main\/init.* url reject-dict
+
+# 百度网盘精准活动广告
+^https?:\/\/pan\.baidu\.com\/act\/api\/activityasync\?channel=ad.* url reject-dict
+
+
+# =========================
+# 7. 平安好车主
+# =========================
+
+# 平安广告资源
+^https?:\/\/pa-resource\.pingan\.com\.cn\/ad\/.* url reject-dict
+
+
+# =========================
+# 8. 腾讯 / 通用统计
+# =========================
+
+# 腾讯 Beacon 统计
+^https?:\/\/otheve\.beacon\.qq\.com\/.* url reject
+
+# 漫画站广告统计
+^https?:\/\/adash\.manhuazhan\.com\/.* url reject
+
 
 [mitm]
-hostname = mp.weixin.qq.com, servicedash.service.qq.com, tieba.baidu.com, mail.qq.com, mdap.alipaylog.com, *.taobao.com, api.m.jd.com, app.shizhuang.com, api.pinduoduo.com, ads.95516.com, mapi.dianping.com, edith.xiaohongshu.com, *.snssdk.com, music.163.com, ad.12306.cn, gab.122.gov.cn, *.amap.com, *.umetrip.com, api.zhihu.com, api.coolapk.com, pan.baidu.com, pa-resource.pingan.com.cn, ads.pstatp.com
+
+hostname = mp.weixin.qq.com, servicedash.service.qq.com, mail.qq.com, tieba.baidu.com, mdap.alipaylog.com, acs.m.taobao.com, api.m.jd.com, api.pinduoduo.com, mapi.dianping.com, app.shizhuang.com, ads.95516.com, edith.xiaohongshu.com, api.snssdk.com, mon.snssdk.com, music.163.com, ad.12306.cn, gab.122.gov.cn, restapi.amap.com, gateway.umetrip.com, api.zhihu.com, api.coolapk.com, pan.baidu.com, pa-resource.pingan.com.cn
