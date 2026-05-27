@@ -1,16 +1,14 @@
 [filter_local]
 
-# ========== 1. 广告 / 追踪（只保留高确定性） ==========
+# ========== 1. 广告 / 追踪 ==========
 DOMAIN,ad.12306.cn,REJECT
 DOMAIN,wxsnsdy.video.qq.com,REJECT
 DOMAIN,ads.pstatp.com,REJECT
-
-# ⚠️ manhuazhan 这类站稳定性一般，建议保守处理
 DOMAIN,adash.manhuazhan.com,REJECT
 
 
-# ========== 2. 国内直连（收敛版：避免“过宽DIRECT污染策略判断”） ==========
-# 社交/支付/基础服务
+# ========== 2. 国内直连（核心稳定版） ==========
+# 社交 / 支付
 DOMAIN-SUFFIX,weixin.qq.com,DIRECT
 DOMAIN-SUFFIX,qq.com,DIRECT
 DOMAIN-SUFFIX,alipay.com,DIRECT
@@ -18,47 +16,45 @@ DOMAIN-SUFFIX,95516.com,DIRECT
 DOMAIN-SUFFIX,ccb.com,DIRECT
 DOMAIN-SUFFIX,pingan.com.cn,DIRECT
 
-# 网盘（只保核心，不做全量泛DIRECT）
+# 百度
+DOMAIN-SUFFIX,baidu.com,DIRECT
+DOMAIN-SUFFIX,bdstatic.com,DIRECT
 DOMAIN-SUFFIX,pan.baidu.com,DIRECT
 
-# ⚠️ 删除 idlefish / shizhuang / dji 这种“业务混合域”
-# 这些域名广告/风控/推荐混在一起，DIRECT过宽反而容易绕过策略控制
-
-
-# ========== 3. 电商/生活（精简为核心主域） ==========
+# 电商
 DOMAIN-SUFFIX,taobao.com,DIRECT
 DOMAIN-SUFFIX,tmall.com,DIRECT
 DOMAIN-SUFFIX,jd.com,DIRECT
 DOMAIN-SUFFIX,pinduoduo.com,DIRECT
 
-# ⚠️ 闲鱼/得物这类建议不要强制 DIRECT（容易绕规则体系）
-# DOMAIN-SUFFIX,idlefish.com,DIRECT
-# DOMAIN-SUFFIX,dewu.com,DIRECT
-
-
-# ========== 4. 内容/媒体（保留核心稳定入口） ==========
+# 内容平台
 DOMAIN-SUFFIX,163.com,DIRECT
 DOMAIN-SUFFIX,zhihu.com,DIRECT
-DOMAIN-SUFFIX,bilibili.com,DIRECT
 DOMAIN-SUFFIX,xiaohongshu.com,DIRECT
+
+# 地图 / 出行
 DOMAIN-SUFFIX,amap.com,DIRECT
 DOMAIN-SUFFIX,12306.cn,DIRECT
 DOMAIN-SUFFIX,umetrip.com,DIRECT
 
 
-# ⚠️ coolapk 已删除（原因：init + feed混合，长期不稳定）
+# ========== 3. 哔哩哔哩（完整修复） ==========
+DOMAIN-SUFFIX,bilibili.com,DIRECT
+DOMAIN-SUFFIX,bilivideo.com,DIRECT
+DOMAIN-SUFFIX,bilivideo.cn,DIRECT
+DOMAIN-SUFFIX,hdslb.com,DIRECT
+
+# B站上传 / CDN
+DOMAIN-KEYWORD,upos,DIRECT
 
 
-# ========== 5. Apple 生态（优化：去掉无意义 keyword） ==========
+# ========== 4. Apple ==========
 DOMAIN-SUFFIX,apple.com,DIRECT
 DOMAIN-SUFFIX,icloud.com,DIRECT
 DOMAIN-SUFFIX,mzstatic.com,DIRECT
 
-# ⚠️ 删除 DOMAIN-KEYWORD,apple
-# 原因：容易误伤 + 没必要 + 现代系统已不依赖 keyword 分流
 
-
-# ========== 6. 国外代理（收敛 + 更干净） ==========
+# ========== 5. 国外代理 ==========
 # YouTube / Google
 DOMAIN-SUFFIX,youtube.com,Proxy
 DOMAIN-SUFFIX,googlevideo.com,Proxy
@@ -75,7 +71,7 @@ IP-CIDR,91.108.4.0/22,Proxy
 IP-CIDR,91.108.56.0/22,Proxy
 IP-CIDR,149.154.160.0/20,Proxy
 
-# Meta / Instagram
+# Meta
 DOMAIN-SUFFIX,instagram.com,Proxy
 DOMAIN-SUFFIX,cdninstagram.com,Proxy
 DOMAIN-SUFFIX,facebook.com,Proxy
@@ -85,11 +81,13 @@ DOMAIN-SUFFIX,netflix.com,Proxy
 DOMAIN-SUFFIX,disneyplus.com,Proxy
 DOMAIN-KEYWORD,spotify,Proxy
 
-# 工具
+# 开发工具
 DOMAIN-SUFFIX,github.com,Proxy
 
 
-# ========== 7. 终极兜底（关键优化点） ==========
+# ========== 6. 国内兜底 ==========
 GEOIP,CN,DIRECT
 
+
+# ========== 7. 最终规则 ==========
 FINAL,Proxy
